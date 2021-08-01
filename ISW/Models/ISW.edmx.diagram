@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="caeaab16c65e4b8b967c1bfbd27700cc" Name="Diagram1">
+        <EntityTypeShape EntityType="ISWModel.Bank_Branch" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Corporate" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Corporate_User" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Department" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Employee" Width="1.5" PointX="8" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Institution" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Leave" Width="1.5" PointX="10.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.Role" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.User" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.User_Bank_Branch" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.User_Institution" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ISWModel.User_Role" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="ISWModel.FK_User_Bank_Branch_Bank_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_Corporate_User_Corporate" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_Corporate_User_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_Employee_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_Leave_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_User_Institution_User_Institution" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_User_Role_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_User_Bank_Branch_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_User_Institution_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ISWModel.FK_User_Role_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

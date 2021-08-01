@@ -1,0 +1,713 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ISWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bank Branch">
+          <Key>
+            <PropertyRef Name="Branch Code" />
+          </Key>
+          <Property Name="Branch Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Branch Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Corporate">
+          <Key>
+            <PropertyRef Name="Corporate Type" />
+          </Key>
+          <Property Name="Corporate Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Corporate User">
+          <Key>
+            <PropertyRef Name="User Corporate Id" />
+          </Key>
+          <Property Name="User Corporate Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Corporate Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department ID" />
+          </Key>
+          <Property Name="Department ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee ID" />
+          </Key>
+          <Property Name="Employee ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="First Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Last Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImagePath" Type="text" />
+          <Property Name="Full Name" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="Institution Code" />
+          </Key>
+          <Property Name="Institution Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Institution Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Leave">
+          <Key>
+            <PropertyRef Name="Leave ID" />
+          </Key>
+          <Property Name="Leave ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Employee ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Start Date" Type="date" Nullable="false" />
+          <Property Name="End Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role Code" />
+          </Key>
+          <Property Name="Role Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Last Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="First Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email  Address" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="User Bank Branch">
+          <Key>
+            <PropertyRef Name="User Branch ID" />
+          </Key>
+          <Property Name="User Branch ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Branch Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User Institution">
+          <Key>
+            <PropertyRef Name="User Institution" />
+          </Key>
+          <Property Name="User Institution" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Institution Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User Role">
+          <Key>
+            <PropertyRef Name="User Role ID" />
+          </Key>
+          <Property Name="User Role ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Corporate User_Corporate">
+          <End Role="Corporate" Type="Self.Corporate" Multiplicity="1" />
+          <End Role="Corporate User" Type="Self.Corporate User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporate">
+              <PropertyRef Name="Corporate Type" />
+            </Principal>
+            <Dependent Role="Corporate User">
+              <PropertyRef Name="Corporate Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Corporate User_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Corporate User" Type="Self.Corporate User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Corporate User">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Department ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leave" Type="Self.Leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee ID" />
+            </Principal>
+            <Dependent Role="Leave">
+              <PropertyRef Name="Employee ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Bank Branch_Bank Branch">
+          <End Role="Bank Branch" Type="Self.Bank Branch" Multiplicity="1" />
+          <End Role="User Bank Branch" Type="Self.User Bank Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank Branch">
+              <PropertyRef Name="Branch Code" />
+            </Principal>
+            <Dependent Role="User Bank Branch">
+              <PropertyRef Name="Branch Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Bank Branch_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User Bank Branch" Type="Self.User Bank Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User Bank Branch">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Institution_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User Institution" Type="Self.User Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User Institution">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Institution_User Institution">
+          <End Role="Institution" Type="Self.Institution" Multiplicity="1" />
+          <End Role="User Institution" Type="Self.User Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Institution Code" />
+            </Principal>
+            <Dependent Role="User Institution">
+              <PropertyRef Name="Institution Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Role_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User Role" Type="Self.User Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role Code" />
+            </Principal>
+            <Dependent Role="User Role">
+              <PropertyRef Name="Role Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User Role_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User Role" Type="Self.User Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User Role">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ISWModelStoreContainer">
+          <EntitySet Name="Bank Branch" EntityType="Self.Bank Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Corporate" EntityType="Self.Corporate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Corporate User" EntityType="Self.Corporate User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Institution" EntityType="Self.Institution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave" EntityType="Self.Leave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User Bank Branch" EntityType="Self.User Bank Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User Institution" EntityType="Self.User Institution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User Role" EntityType="Self.User Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Corporate User_Corporate" Association="Self.FK_Corporate User_Corporate">
+            <End Role="Corporate" EntitySet="Corporate" />
+            <End Role="Corporate User" EntitySet="Corporate User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Corporate User_User" Association="Self.FK_Corporate User_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Corporate User" EntitySet="Corporate User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Employee" Association="Self.FK_Leave_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Leave" EntitySet="Leave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Bank Branch_Bank Branch" Association="Self.FK_User Bank Branch_Bank Branch">
+            <End Role="Bank Branch" EntitySet="Bank Branch" />
+            <End Role="User Bank Branch" EntitySet="User Bank Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Bank Branch_User" Association="Self.FK_User Bank Branch_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User Bank Branch" EntitySet="User Bank Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Institution_User" Association="Self.FK_User Institution_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User Institution" EntitySet="User Institution" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Institution_User Institution" Association="Self.FK_User Institution_User Institution">
+            <End Role="Institution" EntitySet="Institution" />
+            <End Role="User Institution" EntitySet="User Institution" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Role_Role" Association="Self.FK_User Role_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User Role" EntitySet="User Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User Role_User" Association="Self.FK_User Role_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User Role" EntitySet="User Role" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ISWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bank_Branch">
+          <Key>
+            <PropertyRef Name="Branch_Code" />
+          </Key>
+          <Property Name="Branch_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Branch_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Bank_Branch" Relationship="Self.FK_User_Bank_Branch_Bank_Branch" FromRole="Bank_Branch" ToRole="User_Bank_Branch" />
+        </EntityType>
+        <EntityType Name="Corporate">
+          <Key>
+            <PropertyRef Name="Corporate_Type" />
+          </Key>
+          <Property Name="Corporate_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Corporate_User" Relationship="Self.FK_Corporate_User_Corporate" FromRole="Corporate" ToRole="Corporate_User" />
+        </EntityType>
+        <EntityType Name="Corporate_User">
+          <Key>
+            <PropertyRef Name="User_Corporate_Id" />
+          </Key>
+          <Property Name="User_Corporate_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Corporate_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Corporate" Relationship="Self.FK_Corporate_User_Corporate" FromRole="Corporate_User" ToRole="Corporate" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Corporate_User_User" FromRole="Corporate_User" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Full_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Leaves" Relationship="Self.FK_Leave_Employee" FromRole="Employee" ToRole="Leave" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="Institution_Code" />
+          </Key>
+          <Property Name="Institution_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Institution_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_Institution" Relationship="Self.FK_User_Institution_User_Institution" FromRole="Institution" ToRole="User_Institution" />
+        </EntityType>
+        <EntityType Name="Leave">
+          <Key>
+            <PropertyRef Name="Leave_ID" />
+          </Key>
+          <Property Name="Leave_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Start_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="End_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Leave_Employee" FromRole="Leave" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_Code" />
+          </Key>
+          <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_Role" Relationship="Self.FK_User_Role_Role" FromRole="Role" ToRole="User_Role" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email__Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Corporate_User" Relationship="Self.FK_Corporate_User_User" FromRole="User" ToRole="Corporate_User" />
+          <NavigationProperty Name="User_Bank_Branch" Relationship="Self.FK_User_Bank_Branch_User" FromRole="User" ToRole="User_Bank_Branch" />
+          <NavigationProperty Name="User_Institution" Relationship="Self.FK_User_Institution_User" FromRole="User" ToRole="User_Institution" />
+          <NavigationProperty Name="User_Role" Relationship="Self.FK_User_Role_User" FromRole="User" ToRole="User_Role" />
+        </EntityType>
+        <EntityType Name="User_Bank_Branch">
+          <Key>
+            <PropertyRef Name="User_Branch_ID" />
+          </Key>
+          <Property Name="User_Branch_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Branch_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bank_Branch" Relationship="Self.FK_User_Bank_Branch_Bank_Branch" FromRole="User_Bank_Branch" ToRole="Bank_Branch" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Bank_Branch_User" FromRole="User_Bank_Branch" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Institution">
+          <Key>
+            <PropertyRef Name="User_Institution1" />
+          </Key>
+          <Property Name="User_Institution1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Institution_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Institution" Relationship="Self.FK_User_Institution_User_Institution" FromRole="User_Institution" ToRole="Institution" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Institution_User" FromRole="User_Institution" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Role">
+          <Key>
+            <PropertyRef Name="User_Role_ID" />
+          </Key>
+          <Property Name="User_Role_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role_Role" FromRole="User_Role" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role_User" FromRole="User_Role" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_Bank_Branch_Bank_Branch">
+          <End Role="Bank_Branch" Type="Self.Bank_Branch" Multiplicity="1" />
+          <End Role="User_Bank_Branch" Type="Self.User_Bank_Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank_Branch">
+              <PropertyRef Name="Branch_Code" />
+            </Principal>
+            <Dependent Role="User_Bank_Branch">
+              <PropertyRef Name="Branch_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Corporate_User_Corporate">
+          <End Role="Corporate" Type="Self.Corporate" Multiplicity="1" />
+          <End Role="Corporate_User" Type="Self.Corporate_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporate">
+              <PropertyRef Name="Corporate_Type" />
+            </Principal>
+            <Dependent Role="Corporate_User">
+              <PropertyRef Name="Corporate_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Corporate_User_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Corporate_User" Type="Self.Corporate_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Corporate_User">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leave_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leave" Type="Self.Leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Leave">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Institution_User_Institution">
+          <End Role="Institution" Type="Self.Institution" Multiplicity="1" />
+          <End Role="User_Institution" Type="Self.User_Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institution">
+              <PropertyRef Name="Institution_Code" />
+            </Principal>
+            <Dependent Role="User_Institution">
+              <PropertyRef Name="Institution_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_Code" />
+            </Principal>
+            <Dependent Role="User_Role">
+              <PropertyRef Name="Role_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Bank_Branch_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Bank_Branch" Type="Self.User_Bank_Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User_Bank_Branch">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Institution_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Institution" Type="Self.User_Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User_Institution">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User_Role">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ISWEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bank_Branches" EntityType="Self.Bank_Branch" />
+          <EntitySet Name="Corporates" EntityType="Self.Corporate" />
+          <EntitySet Name="Corporate_Users" EntityType="Self.Corporate_User" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Institutions" EntityType="Self.Institution" />
+          <EntitySet Name="Leaves" EntityType="Self.Leave" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="User_Bank_Branches" EntityType="Self.User_Bank_Branch" />
+          <EntitySet Name="User_Institutions" EntityType="Self.User_Institution" />
+          <EntitySet Name="User_Roles" EntityType="Self.User_Role" />
+          <AssociationSet Name="FK_User_Bank_Branch_Bank_Branch" Association="Self.FK_User_Bank_Branch_Bank_Branch">
+            <End Role="Bank_Branch" EntitySet="Bank_Branches" />
+            <End Role="User_Bank_Branch" EntitySet="User_Bank_Branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Corporate_User_Corporate" Association="Self.FK_Corporate_User_Corporate">
+            <End Role="Corporate" EntitySet="Corporates" />
+            <End Role="Corporate_User" EntitySet="Corporate_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Corporate_User_User" Association="Self.FK_Corporate_User_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Corporate_User" EntitySet="Corporate_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leave_Employee" Association="Self.FK_Leave_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Leave" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Institution_User_Institution" Association="Self.FK_User_Institution_User_Institution">
+            <End Role="Institution" EntitySet="Institutions" />
+            <End Role="User_Institution" EntitySet="User_Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role_Role" Association="Self.FK_User_Role_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User_Role" EntitySet="User_Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Bank_Branch_User" Association="Self.FK_User_Bank_Branch_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Bank_Branch" EntitySet="User_Bank_Branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Institution_User" Association="Self.FK_User_Institution_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Institution" EntitySet="User_Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role_User" Association="Self.FK_User_Role_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Role" EntitySet="User_Roles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ISWModelStoreContainer" CdmEntityContainer="ISWEntities">
+          <EntitySetMapping Name="Bank_Branches">
+            <EntityTypeMapping TypeName="ISWModel.Bank_Branch">
+              <MappingFragment StoreEntitySet="Bank Branch">
+                <ScalarProperty Name="Branch_Code" ColumnName="Branch Code" />
+                <ScalarProperty Name="Branch_Name" ColumnName="Branch Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Corporates">
+            <EntityTypeMapping TypeName="ISWModel.Corporate">
+              <MappingFragment StoreEntitySet="Corporate">
+                <ScalarProperty Name="Corporate_Type" ColumnName="Corporate Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Corporate_Users">
+            <EntityTypeMapping TypeName="ISWModel.Corporate_User">
+              <MappingFragment StoreEntitySet="Corporate User">
+                <ScalarProperty Name="User_Corporate_Id" ColumnName="User Corporate Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Corporate_Type" ColumnName="Corporate Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="ISWModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department_ID" ColumnName="Department ID" />
+                <ScalarProperty Name="Department_Name" ColumnName="Department Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ISWModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee ID" />
+                <ScalarProperty Name="First_Name" ColumnName="First Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last Name" />
+                <ScalarProperty Name="Department_ID" ColumnName="Department ID" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Full_Name" ColumnName="Full Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Institutions">
+            <EntityTypeMapping TypeName="ISWModel.Institution">
+              <MappingFragment StoreEntitySet="Institution">
+                <ScalarProperty Name="Institution_Code" ColumnName="Institution Code" />
+                <ScalarProperty Name="Institution_Name" ColumnName="Institution Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leaves">
+            <EntityTypeMapping TypeName="ISWModel.Leave">
+              <MappingFragment StoreEntitySet="Leave">
+                <ScalarProperty Name="Leave_ID" ColumnName="Leave ID" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee ID" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start Date" />
+                <ScalarProperty Name="End_Date" ColumnName="End Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ISWModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_Name" ColumnName="Role Name" />
+                <ScalarProperty Name="Role_Code" ColumnName="Role Code" />
+                <ScalarProperty Name="Role_Description" ColumnName="Role Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ISWModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First Name" />
+                <ScalarProperty Name="Email__Address" ColumnName="Email  Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Bank_Branches">
+            <EntityTypeMapping TypeName="ISWModel.User_Bank_Branch">
+              <MappingFragment StoreEntitySet="User Bank Branch">
+                <ScalarProperty Name="User_Branch_ID" ColumnName="User Branch ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Branch_Code" ColumnName="Branch Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Institutions">
+            <EntityTypeMapping TypeName="ISWModel.User_Institution">
+              <MappingFragment StoreEntitySet="User Institution">
+                <ScalarProperty Name="User_Institution1" ColumnName="User Institution" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Institution_Code" ColumnName="Institution Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Roles">
+            <EntityTypeMapping TypeName="ISWModel.User_Role">
+              <MappingFragment StoreEntitySet="User Role">
+                <ScalarProperty Name="User_Role_ID" ColumnName="User Role ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Role_Code" ColumnName="Role Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
